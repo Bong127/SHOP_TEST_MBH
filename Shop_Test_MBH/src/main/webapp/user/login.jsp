@@ -22,7 +22,20 @@
 		}
 		
 		// 아이디 저장 쿠키 가져오기
-		
+		String rememberId = "";
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				String cookieName = cookie.getName();
+				String cookieValue = URLDecoder.decode(cookie.getValue(), "UTF-8");
+				switch(cookieName){
+					case "loginId" : loginId = cookieValue; break;
+					case "rememberId" : rememberId = cookieValue; break;
+				}
+			}
+		}
+		pageContext.setAttribute("loginId", loginId);
+		pageContext.setAttribute("rememberId", rememberId);
 		
 	%>
 	<jsp:include page="/layout/header.jsp" />

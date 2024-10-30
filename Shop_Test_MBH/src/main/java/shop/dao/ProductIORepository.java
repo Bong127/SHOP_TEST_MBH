@@ -15,6 +15,7 @@ public class ProductIORepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(Product product) {
+		return 0;
 		
 	}
 	

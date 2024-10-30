@@ -15,12 +15,9 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import DTO.PersistenceLogins;
-import DTO.Users;
-import Service.PersistenceLoginService;
-import Service.PersistenceLoginServiceImpl;
-import Service.UserService;
-import Service.UserServiceImpl;
+import shop.dao.UserRepository;
+import shop.dto.PersistentLogin;
+import shop.dto.User;
 
 /**
  * Servlet Filter implementation class LoginFilter
@@ -28,8 +25,7 @@ import Service.UserServiceImpl;
 @WebFilter(description = "자동 로그인 등, 인증처리 필터", urlPatterns = { "/*" })
 public class LoginFilter extends HttpFilter implements Filter {
 	
-	PersistenceLoginService persistenceLoginService;
-	UserService userService;
+	UserRepository userService;
        
     public LoginFilter() {
     	
@@ -37,8 +33,7 @@ public class LoginFilter extends HttpFilter implements Filter {
     }
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		persistenceLoginService = new PersistenceLoginServiceImpl();
-		userService = new UserServiceImpl();
+		this.userService = new UserRepository();
 	}
     
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -67,8 +62,8 @@ public class LoginFilter extends HttpFilter implements Filter {
 		
 		// 로그인 여부 확인
 		HttpSession session = httpRequest.getSession();
-		String loginId = (String) session.getAttribute("loginId");
-		Users loginUser = (Users) session.getAttribute("loginUser");
+		String loginId = (String) session.getAttribute("id");
+		User loginUser = (User) session.getAttribute("user");
 		
 		// 이미 로그인 됨
 		if(loginId != null && loginUser != null) {
@@ -79,15 +74,13 @@ public class LoginFilter extends HttpFilter implements Filter {
 		
 		// 자동 로그인 & 토큰 OK
 		if(rememberMe != null && token != null) {
-			PersistenceLogins persistenceLogins = persistenceLoginService.selectByToken(token);
-			boolean isValid = persistenceLoginService.isValid(token);
-			if(persistenceLogins != null && isValid) {
-				loginId = persistenceLogins.getUsername();
-				loginUser = userService.select(loginId);
+			PersistentLogin persistentLogin = userService.selectTokenByToken(token);
+			if(persistentLogin != null) {
+				loginId = persistentLogin.getUserId();
+				
 				//로그인 처리
 				session.setAttribute("loginId", loginId);
-				session.setAttribute("loginUser", loginUser);
-				System.out.println("자동 로그인 성공 : " + loginUser);
+				System.out.println("자동 로그인 성공 : " + loginId);
 			}
 		}
 		chain.doFilter(request, response);

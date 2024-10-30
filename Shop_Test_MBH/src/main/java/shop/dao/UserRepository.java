@@ -1,6 +1,7 @@
 package shop.dao;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.UUID;
 
 import shop.dto.PersistentLogin;
@@ -15,7 +16,8 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(User user) {
-		
+		String sql = "insert into user WHERE id = ?";
+		return 0;
 	}
 	
 	
@@ -26,6 +28,7 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public User login(String id, String pw) {
+		return null;
 		
 	}
 	
@@ -39,7 +42,32 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public User getUserById(String id) {
-		
+	    String sql = "SELECT * FROM user WHERE id = ?";
+	    
+	    User user = null;
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, id);
+
+	        rs = psmt.executeQuery();
+	        if (rs.next()) {
+	        	user = new User();
+	        	user.setId( rs.getString("id")); 
+	        	user.setPassword( rs.getString("password")); 
+	        	user.setName( rs.getString("name")); 
+	        	user.setGender( rs.getString("gender")); 
+	        	user.setBirth( rs.getString("birth")); 
+	        	user.setMail( rs.getString("mail")); 
+	        	user.setPhone( rs.getString("phone")); 
+	        	user.setAddress( rs.getString("address")); 
+	        	user.setRegistDay( rs.getString("regist_day")); 
+	        }
+	        rs.close();
+	    } catch (SQLException e) {
+	        System.err.println("자동 로그인 정보 조회 중, 에러 발생!");
+	        e.printStackTrace();
+	    }
+	    return user;
 	}
 	
 	
@@ -49,6 +77,7 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int update(User user) {
+		return 0;
 		
 	}
 
@@ -59,6 +88,7 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int delete(String id) {
+		return 0;
 		
 	}
 	
@@ -212,7 +242,6 @@ public class UserRepository extends JDBConnection {
 	    System.out.println("자동 로그인 정보 " + result + "개의 데이터가 삭제되었습니다.");
 	    return result;
 	}
-
 
 }
 

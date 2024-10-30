@@ -13,6 +13,7 @@ public class ProductRepository extends JDBConnection {
 	 * @return
 	 */
 	public List<Product> list() {
+		return null;
 		
 	}
 	
@@ -23,6 +24,7 @@ public class ProductRepository extends JDBConnection {
 	 * @return
 	 */
 	public List<Product> list(String keyword) {
+		return null;
 		
 	}
 	
@@ -32,6 +34,7 @@ public class ProductRepository extends JDBConnection {
 	 * @return
 	 */
 	public Product getProductById(String productId) {
+		return null;
 		
 	}
 	
@@ -42,6 +45,7 @@ public class ProductRepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(Product product) {
+		return 0;
 		
 	}
 	
@@ -52,6 +56,7 @@ public class ProductRepository extends JDBConnection {
 	 * @return
 	 */
 	public int update(Product product) {
+		return 0;
 		
 	}
 	
@@ -63,6 +68,7 @@ public class ProductRepository extends JDBConnection {
 	 * @return
 	 */
 	public int delete(String productId) {
+		return 0;
 		
 	}
 

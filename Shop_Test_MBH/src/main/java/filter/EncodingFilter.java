@@ -14,11 +14,6 @@ import javax.servlet.http.HttpFilter;
 /**
  * Servlet Filter implementation class EncodingFilter
  */
-@WebFilter(
-		urlPatterns = { "/*" }, // 모든 경로 URL 매핑
-		initParams = { 
-				@WebInitParam(name = "Encoding", value = "UTF-8")
-		})
 public class EncodingFilter extends HttpFilter implements Filter {
        
 	private FilterConfig filterConfig =null;

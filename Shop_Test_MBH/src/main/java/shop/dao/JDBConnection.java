@@ -36,7 +36,6 @@ public class JDBConnection {
 			String url = properties.getProperty("url");
 			String id = properties.getProperty("id");
 			String pw = properties.getProperty("pw");
-			
 			// mysql-connector-j.xxx.jar 드라이버의 클래스를 로드한다.
 //			Class.forName("com.mysql.cj.jdbc.Driver");		 
 			Class.forName(driver);		 
