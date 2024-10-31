@@ -1,5 +1,6 @@
 <%@page import="shop.dao.UserRepository"%>
 <%@page import="shop.dto.User"%>
+<%@ include file="/layout/meta.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,7 +11,9 @@
 	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
-	
+	<%
+		String loginId = (String) session.getAttribute("loginId");
+	%>
 	<jsp:include page="/layout/header.jsp" />
 	
 	<div class="row m-0 mypage">
@@ -18,7 +21,7 @@
 			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
 			    <ul class="nav nav-pills flex-column mb-auto">
 			      <!-- 로그인 시 -->
-			      <% if( login ) { %>
+			      <% if( loginId != null ) { %>
 			      	
 			      	
 			      <% } %>

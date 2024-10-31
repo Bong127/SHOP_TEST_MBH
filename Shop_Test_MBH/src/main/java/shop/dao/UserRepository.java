@@ -1,10 +1,11 @@
 package shop.dao;
 
-import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
+
 import shop.dto.PersistentLogin;
 import shop.dto.User;
 
@@ -31,63 +32,25 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(User user) throws Exception{
-		 int result = 0;
-	        StringBuilder sql = new StringBuilder("INSERT INTO user (");
-	        StringBuilder placeholders = new StringBuilder(" VALUES (");
-	        
-	        Field[] fields = user.getClass().getDeclaredFields();
-	        boolean first = true;
-
-	        for (Field field : fields) {
-	            field.setAccessible(true);
-	            Object value = field.get(user);
-
-	            if (value != null) {
-	                if (!first) {
-	                    sql.append(", ");
-	                    placeholders.append(", ");
-	                }
-					String fieldName = field.getName();
-	                sql.append(fieldName);
-	                placeholders.append("?");
-	                first = false;
-	            }
-	        }
-
-	        sql.append(") ");
-	        placeholders.append(")");
-	        sql.append(placeholders.toString());
-	        
-	        try {
-	            psmt = con.prepareStatement(sql.toString());
-	            int index = 1;
-
-	            for (Field field : fields) {
-	                field.setAccessible(true);
-	                Object value = field.get(user);
-
-	                if (value != null) {
-	                    if (value instanceof String) {
-	                        psmt.setString(index++, (String) value);
-	                    } else if (value instanceof Boolean) {
-	                        psmt.setBoolean(index++, (Boolean) value);
-	                    } else if (value instanceof Long) {
-	                        psmt.setLong(index++, (Long) value);
-	                    } else if (value instanceof Integer) {
-	                        psmt.setInt(index++, (Integer) value);
-	                    } else if (value instanceof Date) {
-	                        psmt.setDate(index++, new java.sql.Date(((Date) value).getTime()));
-	                    } else {
-	                        psmt.setObject(index++, value);
-	                    }
-	                }
-	            }
-	            result = psmt.executeUpdate();
-	        } catch (Exception e) {
-	            System.err.println("user - insert 도중 에러");
-	            e.printStackTrace();
-	        }
-	        return result;
+		int result = 0;
+		String sql = "insert into user"
+				+ "(id,password,name,gender,birth,mail,phone,address)"
+				+ " values(?,?,?,?,?,?,?,?)";
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, user.getId());
+		    psmt.setString(2, user.getPassword());
+		    psmt.setString(3, user.getName());
+		    psmt.setString(4, user.getGender());
+		    psmt.setString(5, user.getBirth());
+		    psmt.setString(6, user.getMail());
+		    psmt.setString(7, user.getPhone());
+		    psmt.setString(8, user.getAddress());
+		    result = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	
@@ -153,86 +116,25 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int update(User user) throws Exception {
-        int result = 0;
-        StringBuilder sql = new StringBuilder("UPDATE user SET ");
-        StringBuilder whereClause = new StringBuilder(" WHERE id = ?");
-
-        Field[] fields = user.getClass().getDeclaredFields();
-        boolean first = true;
-        Object pkValue = null;
-
-        for (Field field : fields) {
-            field.setAccessible(true);
-            Object value = field.get(user);
-            if (field.getName().equals("id")) {
-                pkValue = value;
-                continue;
-            }
-            if (value != null) {
-                if (!first) {
-                    sql.append(", ");
-                }
-                String fieldName = field.getName();
-                sql.append(fieldName).append(" = ?");
-                first = false;
-            }
-        }
-        sql.append(whereClause);
-        try {
-            psmt = con.prepareStatement(sql.toString());
-            int index = 1;
-
-            for (Field field : fields) {
-                field.setAccessible(true);
-                Object value = field.get(user);
-                if (field.getName().equals("id")) {
-                    continue;
-                }
-                if (value != null) {
-                    if (value instanceof String) {
-                        psmt.setString(index++, (String) value);
-                    } else if (value instanceof Boolean) {
-                        psmt.setBoolean(index++, (Boolean) value);
-                    } else if (value instanceof Long) {
-                        psmt.setLong(index++, (Long) value);
-                    } else if (value instanceof Integer) {
-                        psmt.setInt(index++, (Integer) value);
-                    } else if (value instanceof Double) {
-                        psmt.setDouble(index++, (Double) value);
-                    } else if (value instanceof Float) {
-                        psmt.setFloat(index++, (Float) value);
-                    } else if (value instanceof java.util.Date) {
-                        psmt.setDate(index++, new java.sql.Date(((java.util.Date) value).getTime()));
-                    } else {
-                        psmt.setObject(index++, value);
-                    }
-                }
-            }
-
-            // WHERE pk = ? <-- 조건 값 지정
-            if (pkValue instanceof String) {
-                psmt.setString(index, (String) pkValue);
-            } else if (pkValue instanceof Boolean) {
-                psmt.setBoolean(index, (Boolean) pkValue);
-            } else if (pkValue instanceof Long) {
-                psmt.setLong(index, (Long) pkValue);
-            } else if (pkValue instanceof Integer) {
-                psmt.setInt(index, (Integer) pkValue);
-            } else if (pkValue instanceof Double) {
-                psmt.setDouble(index, (Double) pkValue);
-            } else if (pkValue instanceof Float) {
-                psmt.setFloat(index, (Float) pkValue);
-            } else if (pkValue instanceof java.util.Date) {
-                psmt.setDate(index, new java.sql.Date(((java.util.Date) pkValue).getTime()));
-            } else {
-                psmt.setObject(index, pkValue);
-            }
-            result = psmt.executeUpdate();
-        } catch (Exception e) {
-            System.err.println("user - update 도중 에러");
-            e.printStackTrace();
-        }
-        return result;
+		int result = 0;
+		String sql = "update user set "
+				+ "password=?,name=?,gender=?,birth=?,mail=?,phone=?,address=? "
+				+ "where id=?";
+		try {
+			psmt = con.prepareStatement(sql);
+		    psmt.setString(1, user.getPassword());
+		    psmt.setString(2, user.getName());
+		    psmt.setString(3, user.getGender());
+		    psmt.setString(4, user.getBirth());
+		    psmt.setString(5, user.getMail());
+		    psmt.setString(6, user.getPhone());
+		    psmt.setString(7, user.getAddress());
+		    psmt.setString(8, user.getId());
+		    result = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 
@@ -246,6 +148,7 @@ public class UserRepository extends JDBConnection {
 		String sql = "delete from user where id = ?";
 		try {
 			psmt = con.prepareStatement(sql);
+			psmt.setString(1, id);
 			result = psmt.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println("user - delete 도중 에러");
@@ -322,7 +225,7 @@ public class UserRepository extends JDBConnection {
 	            persistentLogin.setpNo(rs.getInt("p_no")); 
 	            persistentLogin.setUserId(rs.getString("user_id")); 
 	            persistentLogin.setToken(rs.getString("token")); 
-	            persistentLogin.setDate(rs.getTimestamp("date")); // date 필드로 변경
+	            persistentLogin.setDate(rs.getDate("date")); // date 필드로 변경
 	        }
 	        rs.close();
 	    } catch (SQLException e) {

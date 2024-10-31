@@ -43,7 +43,12 @@ public class ImgServlet extends HttpServlet {
 		
 		// productId 로 해당 상품 정보 조회
 		ProductRepository productDAO = new ProductRepository();
-		Product product = productDAO.getProductById(id);
+		Product product = null;
+		try {
+			product = productDAO.getProductById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		String file = product.getFile();	// 파일 경로
 		
 		// 상품 이미지가 없을 때, 기본 이미지로 응답

@@ -44,9 +44,9 @@
        		} else {
         %>
         <!-- 로그인 시 -->
-<!--         <li class="nav-item"> -->
-<%--           <a class="nav-link" aria-current="page" href="<%= root %>/user/update.jsp"><%= loginId %></a> --%>
-<!--         </li> -->
+        <li class="nav-item">
+        	<a class="nav-link" aria-current="page" href="<%= root %>/user/update.jsp"><%= loginId %></a>
+        </li> 
         <li class="nav-item">
         <div class="dropdown">
 	      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,9 +64,9 @@
         </li>
         
         
-<!--         <li class="nav-item"> -->
-<%--           <a class="nav-link" aria-current="page" href="<%= root %>/user/logout.jsp">로그아웃</a> --%>
-<!--         </li> -->
+	     <li class="nav-item"> 
+	       <a class="nav-link" aria-current="page" href="<%= root %>/user/logout.jsp">로그아웃</a> 
+	     </li> 
         <%
         	}
         %>

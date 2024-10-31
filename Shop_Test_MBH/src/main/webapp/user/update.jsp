@@ -101,7 +101,7 @@
 					<div class="input-group mb-3 row">
 						<label class="input-group-text col-md-2" id="">아이디</label>
 						<input type="text" class="form-control col-md-10" 
-							   name="id" placeholder="아이디" required
+							   name="id" placeholder="아이디" required readonly
 							   value="<%= loginUser.getId() %>">
 					</div>
 					
@@ -143,7 +143,8 @@
 							<div class="row">
 								<div class="col">
 									<input type="text" class="form-control" name="year" placeholder="출생년도 " size="6" 
-										   value="<%= year %>">
+										   value="<%=year%>
+">
 								</div>
 								
 								<div class="col">
