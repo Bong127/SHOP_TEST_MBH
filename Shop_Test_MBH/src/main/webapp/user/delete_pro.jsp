@@ -9,6 +9,10 @@
 		// 자동 로그인, 토큰 쿠키 삭제
 		Cookie cookieRememberMe = new Cookie("rememberMe","");
 		Cookie cookieToken = new Cookie("token","");
+		Cookie cookieRememberID = new Cookie("rememberId","");
+		Cookie cookieUserid		= new Cookie("loginId","");
+		cookieRememberID.setMaxAge(0);
+		cookieUserid.setMaxAge(0);
 		cookieRememberMe.setPath("/");
 		cookieToken.setPath("/");
 		cookieRememberMe.setMaxAge(0);
@@ -25,6 +29,8 @@
 		// 쿠키 전달
 		response.addCookie(cookieRememberMe);
 		response.addCookie(cookieToken);
+		response.addCookie(cookieRememberID);
+		response.addCookie(cookieUserid);
 		response.sendRedirect("complete.jsp?msg=3");
 	}else{
 		response.sendRedirect("join.jsp");
