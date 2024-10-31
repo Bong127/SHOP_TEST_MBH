@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Shop</title>
-	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
+	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
 	<%
@@ -22,8 +22,16 @@
 			    <ul class="nav nav-pills flex-column mb-auto">
 			      <!-- 로그인 시 -->
 			      <% if( loginId != null ) { %>
-			      	
-			      	
+			      <li class="nav-item">
+			        <a href="<%= root %>/user/index.jsp" class="nav-link active" aria-current="page">
+			          마이 페이지
+			        </a>
+			      </li>
+			      <li class="nav-item">
+			        <a href="<%= root %>/user/update.jsp" class="nav-link link-body-emphasis">
+			          회원정보 수정
+			        </a>
+			      </li>
 			      <% } %>
 			      <li>
 			        <a href="<%= root %>/user/order.jsp" class="nav-link link-body-emphasis">

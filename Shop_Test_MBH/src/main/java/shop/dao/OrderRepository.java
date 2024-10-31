@@ -80,7 +80,6 @@ public class OrderRepository extends JDBConnection {
 	 */
 	public List<Product> list(String userId) {
 		List<Product> productList = new ArrayList<Product>();
-		Product product = new Product();
 		String sql = "select o.order_no, p.name, p.unit_price, i.amount "
 				+ " from product p, product_io i, `order` o "
 				+ " where p.product_id = i.product_id and o.order_no = i.order_no "
@@ -89,11 +88,12 @@ public class OrderRepository extends JDBConnection {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, userId);
 			rs = psmt.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
+				Product product = new Product();
 				product.setOrderNo(rs.getInt("order_no"));
 				product.setName(rs.getString("name"));
 				product.setUnitPrice(rs.getInt("unit_price"));
-				product.setAmount(rs.getInt("amount"));
+				product.setQuantity(rs.getInt("amount"));
 				productList.add(product);
 			}
 		} catch (Exception e) {
@@ -112,7 +112,6 @@ public class OrderRepository extends JDBConnection {
 	 */
 	public List<Product> list(String phone, String orderPw) {
 		List<Product> productList = new ArrayList<Product>();
-		Product product = new Product();
 		String sql = "select o.order_no, p.name, p.unit_price, i.amount "
 				+ " from product p, product_io i, `order` o "
 				+ " where p.product_id = i.product_id and o.order_no = i.order_no "
@@ -122,11 +121,12 @@ public class OrderRepository extends JDBConnection {
 			psmt.setString(1, phone);
 			psmt.setString(2, orderPw);
 			rs = psmt.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
+				Product product = new Product();
 				product.setOrderNo(rs.getInt("order_no"));
 				product.setName(rs.getString("name"));
 				product.setUnitPrice(rs.getInt("unit_price"));
-				product.setAmount(rs.getInt("amount"));
+				product.setQuantity(rs.getInt("amount"));
 				productList.add(product);
 			}
 		} catch (Exception e) {

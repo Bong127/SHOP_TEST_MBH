@@ -35,7 +35,7 @@ public class ProductRepository extends JDBConnection {
 	    try {
 	        stmt = con.createStatement();
 	        rs = stmt.executeQuery(sql);
-	        if (rs.next()) {
+	        while(rs.next()) {
 	        	product.add(map(rs));
 	        }
 	        rs.close();
@@ -60,7 +60,7 @@ public class ProductRepository extends JDBConnection {
 	    	psmt = con.prepareStatement(sql);
 	    	psmt.setString(1, keyword);
 	        rs = psmt.executeQuery();
-	        if (rs.next()) {
+	        while(rs.next()) {
 	        	product.add(map(rs));
 	        }
 	        rs.close();
