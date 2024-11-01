@@ -63,10 +63,9 @@ public class LoginFilter extends HttpFilter implements Filter {
 		// 로그인 여부 확인
 		HttpSession session = httpRequest.getSession();
 		String loginId = (String) session.getAttribute("id");
-		User loginUser = (User) session.getAttribute("user");
 		
 		// 이미 로그인 됨
-		if(loginId != null && loginUser != null) {
+		if(loginId != null) {
 			chain.doFilter(request, response);
 			System.out.println("로그인된 사용자 : " + loginId);
 			return;

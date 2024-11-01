@@ -31,7 +31,8 @@ public class OrderRepository extends JDBConnection {
 	 */
 	public int insert(Order order) {
 		int result = 0;
-		String sql = "insert into `order` values(?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into `order`(ship_name,zip_code,country,address,date,order_pw,user_id,total_price,phone)"
+				+ " values(?,?,?,?,?,?,?,?,?)";
 		try {
 			psmt = con.prepareStatement(sql);
 		    psmt.setString(1, order.getShipName());
@@ -111,6 +112,8 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public List<Product> list(String phone, String orderPw) {
+		System.out.println("폰은 : "+phone);
+		System.out.println("번호는 : "+orderPw);
 		List<Product> productList = new ArrayList<Product>();
 		String sql = "select o.order_no, p.name, p.unit_price, i.amount "
 				+ " from product p, product_io i, `order` o "

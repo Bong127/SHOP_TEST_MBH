@@ -58,5 +58,6 @@
 	</div>
 	<jsp:include page="/layout/footer.jsp" />
 	<script src="<%= root %>/static/js/delete.js"></script>
+	<jsp:include page="/layout/script.jsp" />
 </body>
 </html>

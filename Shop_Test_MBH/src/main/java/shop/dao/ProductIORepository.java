@@ -27,8 +27,8 @@ public class ProductIORepository extends JDBConnection {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, product.getProductId());
 			psmt.setInt(2, orderNo);
-			psmt.setInt(3, product.getAmount());
-			psmt.setString(4, product.getType());
+			psmt.setInt(3, product.getQuantity());
+			psmt.setString(4, "out");
 			psmt.setString(5, product.getUserId());
 			result = psmt.executeUpdate();
 		} catch (Exception e) {

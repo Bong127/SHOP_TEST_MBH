@@ -16,7 +16,7 @@
 	phone = sb.toString();
 	String orderPw = request.getParameter("orderPw");
 	List<Product> orderList = orderDAO.list(phone, orderPw);
-	session.setAttribute("orderList", orderList);
+	session.setAttribute("tempOrderList", orderList);
 	session.setAttribute("orderPhone", phone);
 	response.sendRedirect(root + "/user/order.jsp");
 %>

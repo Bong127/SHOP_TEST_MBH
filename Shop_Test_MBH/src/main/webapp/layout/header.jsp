@@ -4,12 +4,18 @@
     pageEncoding="UTF-8"%>
     
 <%
-	List<Product> cartList = (List<Product>) session.getAttribute("cartList");
+	String loginId = (String) session.getAttribute("loginId");
+	List<Product> cartList = null;
+	if(loginId!=null){
+		cartList = (List<Product>) session.getAttribute(loginId);
+	}
+	else{
+		cartList = (List<Product>) session.getAttribute("user");
+	}
 	int cartCount = cartList == null ? 0 : cartList.size();
 	
 	String root = request.getContextPath();
 	
-	String loginId = (String) session.getAttribute("loginId");
 	String keyword = request.getParameter("keyword");
 	keyword = keyword == null ? "" : keyword;
 	
@@ -49,8 +55,8 @@
         </li> 
         <li class="nav-item">
         <div class="dropdown">
-	      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-	        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+	      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+	        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2" >
 	        <strong><%= loginId %></strong>
 	      </a>
 	      <ul class="dropdown-menu text-small shadow">

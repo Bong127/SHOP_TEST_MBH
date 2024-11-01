@@ -18,23 +18,26 @@
 <body>   
 	<% 
 		String loginId = (String) session.getAttribute("loginId");
-		// ...
 		List<Product> orderList = null;
 		int orderCount = 0 ;
 		boolean login = false;
 		// 주문 내역 목록을 세션에서 가져오기
 		orderList  = (List<Product>) session.getAttribute("orderList");
+		String orderPhone = (String) session.getAttribute("orderPhone");
 		if(orderList!=null){
 			orderCount = orderList.size();
 		}
-		String orderPhone = (String) session.getAttribute("orderPhone");
 		// 회원인 경우
 		if(loginId!=null){
 			orderList = orderDAO.list(loginId);
 			login = true;
 			orderCount = orderList.size();
+		}else{
+			orderList = (List<Product>) session.getAttribute("tempOrderList");
+			login = false;
+			if(orderList!=null)
+				orderCount = orderList.size();
 		}
-		
 	%>
 	
 	<jsp:include page="/layout/header.jsp" />

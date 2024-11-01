@@ -78,5 +78,6 @@
 		</div>
 	</div>
 	<jsp:include page="/layout/footer.jsp" />
+	<jsp:include page="/layout/script.jsp" />
 </body>
 </html>
