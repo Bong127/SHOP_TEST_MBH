@@ -21,7 +21,7 @@
 		<div class="col-lg-6 mx-auto">
 			<p class="lead mb-4">Shop 쇼핑몰 입니다.</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-					<a href="<%= root %>/shop/product.jsp" class="btn btn-primary w-25 py-2 mt-5">상품목록</a>
+					<a href="<%= root %>/shop/products.jsp" class="btn btn-primary w-25 py-2 mt-5">상품목록</a>
 					<a href="<%= root %>/user/login.jsp" class="btn btn-light border w-25 py-2 mt-5">로그인</a>
 			</div>
 		</div>

@@ -37,6 +37,59 @@ function checkProduct() {
 	return true
 }
 
+function checkUser() {
+	let form = document.joinForm
+	let id = form.id
+	let name = form.name
+	let pw = form.pw
+	let pwConfirm = form.pw_confirm
+	
+	let msg = ''
+	
+	// 아이디 체크
+	// - 영문자 또는 한글로 시작
+	let idCheck = /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]/
+	msg = '아이디는 영문자 또는 한글로 시작해야 합니다.' 
+	if( !check(idCheck, id, msg) ) return false
+	
+	// 비밀번호 체크1
+	// - 영문자, 숫자, 특수문자만 사용
+	let pwCheck1 = /^[A-Za-z0-9!@#\$%\^\&*\)\(+=._-]+$/
+	msg = '비밀번호는  영문자, 숫자, 특수문자만 사용해야 합니다.' 
+	if( !check(pwCheck1, pw, msg) ) return false
+
+	// 비밀번호 체크2
+	// - 특수 문자 1개 포함
+	let pwCheck2 = /(?=.*[!@#\$%\^\&*\)\(+=._-])/
+	msg = '비밀번호는 특수문자가 반드시 1개 포함되어야 합니다.' 
+	if( !check(pwCheck2, pw, msg) ) return false
+	
+	// 비밀번호 체크3
+	// - 전체 글자수 6글자 이상
+	let pwCheck3 = /^.{6,}$/
+	msg = '비밀번호는 전체 글자수가 6글자 이상이어야 합니다.' 
+	if( !check(pwCheck3, pw, msg) ) return false
+	
+	// 비밀번호 확인
+	// - 비밀번호와 비밀번호 확인값 일치
+	msg = '비밀번호와 비밀번호 확인의 값이 일치해야 합니다.' 
+	if( !(pwConfirm.value===pw.value) ) {
+		pwConfirm.select()
+		pwConfirm.focus()
+		alert(msg)
+		return false
+	}
+	
+	// 이름 체크
+	// - 한글만 입력
+	let nameCheck = /^[ㄱ-ㅎㅏ-ㅣ가-힣]+$/
+	msg = '이름은 한글만 입력해야 합니다.' 
+	if( !check(nameCheck, name, msg) ) return false
+	
+	
+	return true
+}
+
 // 정규표현식 유효성 검사 함수
 function check(regExp, element, msg) {
 	

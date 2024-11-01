@@ -16,6 +16,7 @@ public class ProductRepository extends JDBConnection {
 		product.setName(rs.getString("name"));
 		product.setUnitPrice(rs.getInt("unit_price"));
 		product.setDescription(rs.getString("description"));
+		product.setManufacturer(rs.getString("manufacturer"));
 		product.setCategory(rs.getString("category"));
 		product.setUnitsInStock(rs.getInt("units_in_stock"));
 		product.setCondition(rs.getString("condition"));
@@ -54,11 +55,15 @@ public class ProductRepository extends JDBConnection {
 	 * @throws Exception 
 	 */
 	public List<Product> list(String keyword) throws Exception {
-		String sql = "select * from product where name like concat('%',?,'%')";
+		String sql = "select * from product where name like concat('%',?,'%') or description like concat('%',?,'%') "
+				+ "or manufacturer like concat('%',?,'%') or category like concat('%',?,'%')";
 		List<Product> product = new ArrayList<Product>();
 	    try {
 	    	psmt = con.prepareStatement(sql);
 	    	psmt.setString(1, keyword);
+	    	psmt.setString(2, keyword);
+	    	psmt.setString(3, keyword);
+	    	psmt.setString(4, keyword);
 	        rs = psmt.executeQuery();
 	        while(rs.next()) {
 	        	product.add(map(rs));
@@ -135,7 +140,7 @@ public class ProductRepository extends JDBConnection {
 		int result = 0;
 		String sql = "update product set "
 					+" name=?, unit_price=?, description=?, manufacturer=?, category=?, "
-					+" units_in_stock=?, condition=?, file=?, quantity=? "
+					+" units_in_stock=?, `condition`=?, file=?, quantity=? "
 					+ "where product_id=?";
 		try {
 			psmt = con.prepareStatement(sql);

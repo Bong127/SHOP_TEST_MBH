@@ -5,11 +5,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Shop</title>
-	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
+	<%@ include file="/layout/meta.jsp" %>
+	<%@ include file="/layout/link.jsp" %>
 </head>
 <body>   
 	<% 
-		String root = request.getContextPath(); 
 		int msg = Integer.parseInt(request.getParameter("msg"));
 		String loginId = (String) session.getAttribute("loginId");
 	%>

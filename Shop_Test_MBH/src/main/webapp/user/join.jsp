@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<title>Shop</title>
 	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
+	<link href="/Shop/static/css/style.css" rel="stylesheet">
 </head>
 <body>   
 	
@@ -16,7 +17,7 @@
 	
 	<!-- 회원 가입 영역 -->
 	<div class="container shop p-5 mb-5" >
-		<form action="join_pro.jsp" name="joinForm" method="post" >
+		<form action="join_pro.jsp" name="joinForm" onsubmit="return checkUser()" method="post" >
 		
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-4" id="">아이디</label>
