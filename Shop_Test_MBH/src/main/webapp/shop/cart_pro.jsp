@@ -7,7 +7,7 @@
 <jsp:useBean id="productDAO" class="shop.dao.ProductRepository" />
 <%
 	String loginId = (String) session.getAttribute("loginId");
-	String productId = request.getParameter("id");
+	String productId = request.getParameter("productId");
 	Product product = productDAO.getProductById(productId);
 	List<Product> productList = null;
 	
@@ -44,5 +44,5 @@
 	}
 	
 	// 장바구니 페이지로 리디렉션
-	response.sendRedirect(root + "/shop/cart.jsp");
+	response.sendRedirect(root + "/shop/products.jsp");
 %>

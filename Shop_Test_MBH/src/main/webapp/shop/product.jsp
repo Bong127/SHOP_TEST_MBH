@@ -12,8 +12,8 @@
 </head>
 <body>
 	<%
-		String id = request.getParameter("id");
-		Product product = productDAO.getProductById(id);
+		String productId = request.getParameter("productId");
+		Product product = productDAO.getProductById(productId);
 	%>
 	<jsp:include page="/layout/header.jsp" />
 	<div class="px-4 py-5 my-5 text-center">
@@ -70,7 +70,7 @@
 							<a href="./cart.jsp" class="btn btn-lg btn-warning mx-3">장바구니</a>
 							
 							<!-- 페이지 이동 막기 :  href="javascript:;" -->			
-							<a href="javascript:;" class="btn btn-lg btn-success mx-3" onclick="addToCart()">주문하기</a>
+							<a href="javascript:;" class="btn btn-lg btn-success mx-3" onclick="addToCart('<%=productId%>','<%=root%>')">주문하기</a>
 						</div>
 					</form>
 				</div>
@@ -79,5 +79,10 @@
 	</div>
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" />
+	<script type="text/javascript">
+		function addToCart(productId,root){
+			window.location.href = root+"/shop/addCart.jsp?productId="+productId;
+		}
+	</script>
 </body>
 </html>
